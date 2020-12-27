@@ -1,3 +1,5 @@
 # learning-materials
 
-学习纪录
+纪录学习Java的日常知识点
+
+- K8s
