@@ -103,7 +103,7 @@ Tip：
 
 ### 总结
 
-- AQS 是 ReentrantReadWriteLock 和 ReentrantLock 的基础，因为默认的实现都是在内部类 Syn 中，而 Syn 是继承 AQS 的-
+- AQS 是 ReentrantReadWriteLock 和 ReentrantLock 的基础，因为默认的实现都是在内部类 Syn 中，而 Syn 是继承 AQS 的
 - ReentrantReadWriteLock 和 ReentrantLock 都支持公平和非公平模式，公平模式下会去看 FIFO 队列线程是否是在队头，而非公平模式下是没有的
 - ReentrantReadWriteLock 是一个读写锁，如果读的线程比写的线程要多很多的话，那可以考虑使用它。它使用 state 的变量高 16 位是读锁，低 16 位是写锁
 - 写锁可以降级为读锁，读锁不能升级为写锁
