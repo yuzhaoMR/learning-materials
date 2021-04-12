@@ -1,7 +1,7 @@
 # AQS
 
 lock 包下有三个抽象的类:
-![""](./lock.png "lock package")
+![""](./pic/lock.png "lock package")
 
 通常地：AbstractQueuedSynchronizer 简称为 AQS  
 我们 Lock 之类的两个常⻅的锁都是基于它来实现的
@@ -13,7 +13,7 @@ CLH（Craig，Landin，and Hagersten）队列是一个虚拟的双向队列，�
 
 ## AQS 实现
 
-![""](./AQS.png "aqs")
+![""](./pic/AQS.png "aqs")
 
 如图示，AQS 维护了一个 volatile int state 和一个 FIFO 线程等待队列，多线程争用资源被阻塞的时候就会进入这个队列。state 就是共享资源，其访问方式有如下三种：
 getState();setState();compareAndSetState();

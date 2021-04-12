@@ -59,9 +59,52 @@ Tip：
 - 支持 Condition 条件对象
 - 允许多个读线程同时访问共享资源
 
+> Lock 锁主要的两个子类：
+
+- ReentrantLock
+- ReentrantReadWriteLock
+
 ## synchronized 锁和 Lock 锁使用哪个
 
 - synchronized 好用，简单，性能不差
 - 没有使用到 Lock 显式锁的特性就不要使用 Lock 锁了，要手动释放锁才行(如果忘了释放，这就是一个隐患)
 
 所以说，我们绝大部分时候还是会使用 Synchronized 锁，用到了 Lock 锁提及的特性，带来的灵活性才会考虑使用 Lock 显式锁
+
+## ReentrantLock 和 ReentrantReadWriteLock
+
+### ReentrantLock
+
+> 要点
+
+- 比 synchronized 更有伸缩性(灵活)
+- 支持公平锁(是相对公平的)和非公平锁的
+- 互斥锁(一次只能有一个线程进入到临界区(被锁定的区域))
+- 使用时最标准用法是在 try 之前调用 lock 方法，在 finally 代码块释放锁
+- AQS 是 ReentrantLock 的基础，AQS 是构建锁、同步器的框架
+
+![""](./pic/AQS结构.png "aqs")
+
+### ReentrantReadWriteLock
+
+是一个读写锁：
+
+- 在读取数据的时候，可以多个线程同时进入到到临界区(被锁定的区域)
+- 在写数据的时候，无论是读线程还是写线程都是互斥的
+
+一般来说：我们大多数都是读取数据得多，修改数据得少。所以这个读写锁在这种场景下就很有用了！
+
+> 要点
+
+- 读锁不支持条件对象，写锁支持条件对象
+- 读锁不能升级为写锁，写锁可以降级为读锁读
+- 写锁也有公平和非公平模式
+- 读锁支持多个读线程进入临界区，写锁是互斥
+
+### 总结
+
+- AQS 是 ReentrantReadWriteLock 和 ReentrantLock 的基础，因为默认的实现都是在内部类 Syn 中，而 Syn 是继承 AQS 的-
+- ReentrantReadWriteLock 和 ReentrantLock 都支持公平和非公平模式，公平模式下会去看 FIFO 队列线程是否是在队头，而非公平模式下是没有的
+- ReentrantReadWriteLock 是一个读写锁，如果读的线程比写的线程要多很多的话，那可以考虑使用它。它使用 state 的变量高 16 位是读锁，低 16 位是写锁
+- 写锁可以降级为读锁，读锁不能升级为写锁
+- 写锁是互斥的，读锁是共享的。
